@@ -6,8 +6,8 @@ let sceneA = {
     console.log('scene A')
   },
   onupdate (dt, { actorA, actorB }) {
-    actorA.x += (10 * dt)
-    actorB.x += (10 * dt)
+    actorA.x += (100 * dt)
+    actorB.x += (150 * dt)
   },
   onrender (dt, { ctx, canvas }, { actorA, actorB }) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -21,5 +21,15 @@ let sceneA = {
     actorB: { x: 0, y: 200, width: 50, height: 30, color: '#ff0000' }
   }
 }
+
+let sceneB = {
+  onstart () {
+    console.log('scene B')
+  }
+}
+
 let flappy = games.create(500, 500)
 games.start(flappy, sceneA)
+setTimeout(() => {
+  games.start(flappy, sceneB)
+}, 5000)
