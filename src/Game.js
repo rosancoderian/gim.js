@@ -1,9 +1,11 @@
-import * as stages from'./stages'
+import * as Stage from './Stage'
+import * as Input from './Input'
 
 const noop = function () {}
 
 export function create (width, height) {
-  let stage = stages.create(width, height)
+  let stage = Stage.create(width, height)
+  let input = Input.create(stage.canvas)
   return {
     stage,
     _scene: null,

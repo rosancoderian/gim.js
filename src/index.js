@@ -1,35 +1,14 @@
-import * as games from './games'
-import * as stages from './stages'
+import * as Game from './Game'
+import * as Stage from './Stage'
 
-let sceneA = {
-  onstart () {
-    console.log('scene A')
-  },
-  onupdate (dt, { actorA, actorB }) {
-    actorA.x += (100 * dt)
-    actorB.x += (150 * dt)
-  },
-  onrender (dt, { ctx, canvas }, { actorA, actorB }) {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = actorA.color;
-    ctx.fillRect(actorA.x, actorA.y, actorA.width, actorA.height);
-    ctx.fillStyle = actorB.color;
-    ctx.fillRect(actorB.x, actorB.y, actorB.width, actorB.height);
-  },
-  actors: {
-    actorA: { x: 0, y: 150, width: 25, height: 25, color: '#0000ff' },
-    actorB: { x: 0, y: 200, width: 50, height: 30, color: '#ff0000' }
+export default function gim () {
+  return {
+    Game,
+    Stage
   }
 }
 
-let sceneB = {
-  onstart () {
-    console.log('scene B')
-  }
-}
+gim.game = Game
+gim.stage = Stage
 
-let flappy = games.create(500, 500)
-games.start(flappy, sceneA)
-setTimeout(() => {
-  games.start(flappy, sceneB)
-}, 5000)
+window.gim = gim
