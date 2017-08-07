@@ -1,3 +1,4 @@
+
 export function create (width, height) {
   let canvas = document.createElement('canvas')
   canvas.width = width
@@ -5,5 +6,10 @@ export function create (width, height) {
   canvas.style.backgroundColor = '#000'
   document.body.appendChild(canvas)
   let ctx = canvas.getContext('2d')
-  return { ctx, canvas }
+  return { 
+    width, 
+    height, 
+    canvas,
+    ctx, 
+  }
 }

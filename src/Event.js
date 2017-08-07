@@ -1,17 +1,17 @@
-export default function create (all) {
-	all = all || Object.create(null);
-	return {
+export function create (obj) {
+	let events = Object.create(null)
+	return Object.assign(obj || {}, {
 		on (type, handler) {
-			(all[type] || (all[type] = [])).push(handler);
+			(events[type] || (events[type] = [])).push(handler)
 		},
 		off (type, handler) {
-			if (all[type]) {
-				all[type].splice(all[type].indexOf(handler) >>> 0, 1);
+			if (events[type]) {
+				events[type].splice(events[type].indexOf(handler) >>> 0, 1)
 			}
 		},
 		emit (type, evt) {
-			(all[type] || []).map((handler) => { handler(evt); });
-			(all['*'] || []).map((handler) => { handler(type, evt); });
+			(events[type] || []).map((handler) => { handler(evt) })
+			(events['*'] || []).map((handler) => { handler(type, evt) })
 		}
-	};
+	})
 }

@@ -1,14 +1,14 @@
 import * as Game from './Game'
 import * as Stage from './Stage'
+import * as Event from './Event'
 
-export default function gim () {
-  return {
-    Game,
-    Stage
-  }
+const gim = {
+  Game,
+  Stage
 }
 
-gim.game = Game
-gim.stage = Stage
+if (window) {
+  window.gim = gim
+}
 
-window.gim = gim
+export default gim
