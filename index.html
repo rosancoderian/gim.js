@@ -8,24 +8,32 @@
       y: 0, 
       width: 25, 
       height: 25, 
-      color: '#0000ff'
+      color: '#0000ff',
+      vel: 0,
+      acc: 250
     }
 
     let playScene = {
       actors: {
         bird
       },
-      onstart ({ bird }) {
-        bird.x = 100
-        bird.y = 200
+      scripts: {
+        fall (dt, bird) {
+          bird.vel += (bird.acc * dt)
+          bird.y += (bird.vel * dt)
+        }
       },
-      onupdate (dt, { bird }) {
-
+      onstart (actors) {
+        actors.bird.x = 100
+        actors.bird.y = 200
       },
-      onrender ({ ctx, canvas }, { bird }) {
+      onupdate (dt, actors, scripts) {
+        scripts.fall(dt, actors.bird)
+      },
+      onrender ({ ctx, canvas }, actors) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = bird.color;
-        ctx.fillRect(bird.x, bird.y, bird.width, bird.height);
+        ctx.fillStyle = actors.bird.color;
+        ctx.fillRect(actors.bird.x, actors.bird.y, actors.bird.width, actors.bird.height);
       }
     }
 

@@ -23,8 +23,8 @@ export function start (game, scene) {
   let onstart = scene.onstart || noop
   let onupdate = scene.onupdate || noop
   let onrender = scene.onrender || noop
-  let actors = scene.actors || []
-  let scripts = scene.scripts || []
+  let actors = scene.actors || {}
+  let scripts = scene.scripts || {}
   onstart(actors, scripts)
   onrender(game.stage, scene.actors)
   game._loop = window.requestAnimationFrame(function frame () {
