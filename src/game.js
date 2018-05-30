@@ -1,6 +1,7 @@
-import Emitter from './emitter.js';
+import Emitter from './emitter.js'
+import Stage from './stage.js'
 
-class Game extends Emitter {
+export default class Ticker extends Emitter {
 	constructor () {
 		super()
 		this.raf = null
@@ -24,5 +25,12 @@ class Game extends Emitter {
 	}
 }
 
-let g = new Game();
-g.start();
+let stage = new Stage(500, 500)
+let ticker = new Ticker()
+
+ticker.on('update', () => {
+	stage.clear()
+	stage.render()
+})
+
+ticker.start();
