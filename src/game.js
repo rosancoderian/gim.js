@@ -1,7 +1,8 @@
 import Emitter from './emitter.js'
 import Stage from './stage.js'
+import Assets from './assets.js'
 
-export default class Ticker extends Emitter {
+class Ticker extends Emitter {
 	constructor () {
 		super()
 		this.raf = null
@@ -25,8 +26,22 @@ export default class Ticker extends Emitter {
 	}
 }
 
+let assets = new Assets()
 let stage = new Stage(500, 500)
 let ticker = new Ticker()
+
+assets.load([
+	'../assets/bird.png'
+])
+
+assets.on('load', (e) => {
+	console.log(e.path + ' loaded')
+})
+
+assets.on('complete', (e) => {
+	console.log('all assets loaded')
+})
+
 
 ticker.on('update', () => {
 	stage.clear()
