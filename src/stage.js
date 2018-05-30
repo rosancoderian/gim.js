@@ -11,9 +11,9 @@ export default class Stage extends Emitter {
         document.body.appendChild(this.canvas);
     }
 
-    clear (fill = '#000') {
+    clear (fill = '#000', x = 0, y = 0, width = this.canvas.width, height = this.canvas.height) {
         this.ctx.fillStyle = fill
-        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height)
+        this.ctx.fillRect(0, 0, width, height)
     }
 
     render () {
