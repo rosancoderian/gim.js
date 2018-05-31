@@ -3,25 +3,26 @@ import Emitter from './emitter.js'
 export default class Assets extends Emitter {
     constructor () {
         super()
-        this.assets = null
+        this.assets = {}
     }
 
-    load (paths = []) {
-        this.assets = paths.reduce((assets, path, index) => {
-            let img = new Image()
-            img.src = path
+    async load (name, url) {
+        let img = new Image()
+        return new Promise((resolve, reject) => {
             img.onload = () => {
-                this.emit('load', { path, index, total: paths.length })
-                if (index + 1 == paths.length) {
-                    this.emit('complete', this)
-                }
+                this.assets[name] = img
+                resolve()
             }
-            assets[path] = img
-            return assets
-        }, {})
+            img.onerror = () => reject()
+            img.src = url
+        })
     }
 
-    get (path) {
-        return this.assets[path]
+    async loads (assets = []) {
+        return Promise.all(assets.map(asset => this.load(asset.name, asset.url)))
+    }
+
+    get (name) {
+        return this.assets[name]
     }
 }
