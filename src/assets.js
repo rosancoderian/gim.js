@@ -10,12 +10,12 @@ export default class Assets extends Emitter {
         this.assets = paths.reduce((assets, path, index) => {
             let img = new Image()
             img.src = path
-            img.onload = function() {
+            img.onload = () => {
                 this.emit('load', { path, index, total: paths.length })
                 if (index + 1 == paths.length) {
                     this.emit('complete', this)
                 }
-            }.bind(this)
+            }
             assets[path] = img
             return assets
         }, {})

@@ -27,11 +27,9 @@ class Ticker extends Emitter {
 }
 
 let assets = new Assets()
-let stage = new Stage(500, 500)
-let ticker = new Ticker()
 
 assets.load([
-	'../assets/bird.png'
+	'/assets/bird.png'
 ])
 
 assets.on('load', (e) => {
@@ -40,12 +38,34 @@ assets.on('load', (e) => {
 
 assets.on('complete', (e) => {
 	console.log('all assets loaded')
+
+	let stage = new Stage(500, 500)
+	let ticker = new Ticker()
+
+	let bird = {
+		x: 0,
+		y: 0,
+		image: assets.get('/assets/bird.png'),
+		update () {
+			this.x += 2
+			if (this.x >= stage.canvas.width) {
+				this.x = -this.image.width
+			}
+		},
+		render (ctx) {
+			ctx.drawImage(assets.get('/assets/bird.png'), this.x, this.y)
+		}
+	}
+	
+	stage.on('render', (stage) => {
+		bird.render(stage.ctx)
+	})
+	
+	ticker.on('update', () => {
+		bird.update()
+		stage.clear()
+		stage.render()
+	})
+	
+	ticker.start()
 })
-
-
-ticker.on('update', () => {
-	stage.clear()
-	stage.render()
-})
-
-ticker.start();
