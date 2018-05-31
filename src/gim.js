@@ -6,7 +6,7 @@ import Keyboard from './keyboard.js'
 let assets = new Assets()
 
 assets.loads([
-	{ name: 'bird', url: '/assets/bird.png' }
+	{ name: 'bird', url: 'https://raw.githubusercontent.com/sourabhv/FlapPyBird/master/assets/sprites/yellowbird-midflap.png' }
 ]).then(() => {
 	console.log('all assets loaded')
 
