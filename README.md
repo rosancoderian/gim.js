@@ -1,6 +1,8 @@
 # gim.js
-still in active development
+Simple html5 canvas game library
 
+
+```
 npm install
-
 npm run dev
+```
