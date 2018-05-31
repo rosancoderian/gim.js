@@ -30,22 +30,18 @@ class Ticker extends Emitter {
 	}
 	
 	_update () {
-		requestAnimationFrame(this._update.bind(this))
+		this._raf = requestAnimationFrame(this._update.bind(this))
 		this._now = performance.now()
 		this._dt = this._now - this._last
 		this._last = this._now
-
 		if (this._dt > 1E3) {
 			return
 		}
-
 		this._accumulator += this._dt
-
 		while (this._accumulator >= this._delta) {
 			this.emit('update', this._step)
 			this._accumulator -= this._delta;
 		}
-		
 	}
 }
 
@@ -70,17 +66,16 @@ assets.on('complete', (e) => {
 		x: 0,
 		y: 0,
 		image: assets.get('/assets/bird.png'),
-		update () {
-			
+		update (step) {
+			this.x += 15
+			if (this.x >= stage.canvas.width) {
+				this.x = -this.image.width
+			}
 		},
 		render (ctx) {
 			ctx.drawImage(assets.get('/assets/bird.png'), this.x, this.y)
 		}
 	}
-
-	keyboard.on('down', (e) => {
-		bird.x++
-	})
 	
 	stage.on('render', (stage) => {
 		bird.render(stage.ctx)
