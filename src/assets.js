@@ -6,7 +6,7 @@ export default class Assets extends Emitter {
         this.assets = {}
     }
 
-    async load (name, url) {
+    load (name, url) {
         let img = new Image()
         return new Promise((resolve, reject) => {
             img.onload = () => {
@@ -18,7 +18,7 @@ export default class Assets extends Emitter {
         })
     }
 
-    async loads (assets = []) {
+    loads (assets = []) {
         return Promise.all(assets.map(asset => this.load(asset.name, asset.url)))
     }
 
