@@ -4,7 +4,7 @@
   "description": "simple canvas game library",
   "main": "./src/index.js",
   "scripts": {
-    "dev": "parcel --no-cache index.html"
+    "dev": "parcel --no-cache gim.js"
   },
   "repository": {
     "type": "git",
