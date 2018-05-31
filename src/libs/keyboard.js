@@ -4,8 +4,17 @@ export default class Keyboard extends Emitter {
     constructor (stage) {
         super()
         this.map = this.mapKey()
-        document.addEventListener('keydown', e => this.emit('down', e));
-        document.addEventListener('keyup', e => this.emit('up', e));
+        this._pressed = {}
+        document.addEventListener('keydown', e => this._pressed[this.map[e.which]] = true)
+        document.addEventListener('keyup', e => this._pressed[this.map[e.which]] = false)
+    }
+
+    isDown (code) {
+        return this._pressed[code]
+    }
+
+    isUp (code) {
+        return !this._pressed[code]
     }
 
     mapKey () {

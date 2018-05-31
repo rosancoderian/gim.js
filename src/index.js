@@ -17,11 +17,32 @@ assets.load([
 	let bird = {
 		x: 0,
 		y: 0,
+		speed: 10,
 		image: assets.get('bird'),
 		update (step) {
-			this.x += 15
 			if (this.x >= stage.canvas.width) {
 				this.x = -this.image.width
+			}
+			if (this.x < -this.image.width) {
+				this.x = stage.canvas.width
+			}
+			if (this.y >= stage.canvas.height) {
+				this.y = -this.image.height
+			}
+			if (this.y < -this.image.height) {
+				this.y = stage.canvas.height
+			}
+			if(keyboard.isDown('right')) {
+				this.x += this.speed
+			}
+			if(keyboard.isDown('left')) {
+				this.x -= this.speed
+			}
+			if(keyboard.isDown('up')) {
+				this.y -= this.speed
+			}
+			if(keyboard.isDown('down')) {
+				this.y += this.speed
 			}
 		},
 		render (ctx) {
