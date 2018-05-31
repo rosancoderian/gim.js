@@ -5,15 +5,9 @@ import Keyboard from './keyboard.js'
 
 let assets = new Assets()
 
-assets.load([
-	'/assets/bird.png'
-])
-
-assets.on('load', (e) => {
-	console.log(e.path + ' loaded')
-})
-
-assets.on('complete', (e) => {
+assets.loads([
+	{ name: 'bird', url: '/assets/bird.png' }
+]).then(() => {
 	console.log('all assets loaded')
 
 	let stage = new Stage(500, 500)
@@ -23,7 +17,7 @@ assets.on('complete', (e) => {
 	let bird = {
 		x: 0,
 		y: 0,
-		image: assets.get('/assets/bird.png'),
+		image: assets.get('bird'),
 		update (step) {
 			this.x += 15
 			if (this.x >= stage.canvas.width) {
@@ -31,7 +25,7 @@ assets.on('complete', (e) => {
 			}
 		},
 		render (ctx) {
-			ctx.drawImage(assets.get('/assets/bird.png'), this.x, this.y)
+			ctx.drawImage(this.image, this.x, this.y)
 		}
 	}
 	
