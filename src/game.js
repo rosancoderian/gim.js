@@ -10,7 +10,7 @@ class Ticker extends Emitter {
 
 	start () {
 		this.emit('start');
-		this._update(0);
+		this._update();
 	}
 
 	stop () {
@@ -20,8 +20,8 @@ class Ticker extends Emitter {
 		}
 	}
 	
-	_update (time) {
-		this.emit('update', this);
+	_update (time = 0) {
+		this.emit('update');
 		requestAnimationFrame(time => this._update(time));
 	}
 }
@@ -39,7 +39,7 @@ assets.on('load', (e) => {
 assets.on('complete', (e) => {
 	console.log('all assets loaded')
 
-	let stage = new Stage(500, 500)
+	let stage = new Stage(1920, 500)
 	let ticker = new Ticker()
 
 	let bird = {
@@ -47,7 +47,7 @@ assets.on('complete', (e) => {
 		y: 0,
 		image: assets.get('/assets/bird.png'),
 		update () {
-			this.x += 2
+			this.x += 5
 			if (this.x >= stage.canvas.width) {
 				this.x = -this.image.width
 			}
@@ -61,6 +61,10 @@ assets.on('complete', (e) => {
 		bird.render(stage.ctx)
 	})
 	
+	ticker.on('start', () => {
+		console.log('ticker start')
+	})
+
 	ticker.on('update', () => {
 		bird.update()
 		stage.clear()
