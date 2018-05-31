@@ -1,7 +1,7 @@
-import Ticker from './ticker.js'
-import Stage from './stage.js'
-import Assets from './assets.js'
-import Keyboard from './keyboard.js'
+import Ticker from './libs/ticker.js'
+import Stage from './libs/stage.js'
+import Assets from './libs/assets.js'
+import Keyboard from './libs/keyboard.js'
 
 let assets = new Assets()
 
