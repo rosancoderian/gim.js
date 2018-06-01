@@ -18,6 +18,8 @@ assets.load([
 		x: 0,
 		y: 0,
 		speed: 10,
+		velocityX:0,
+		velocityY:0,
 		image: assets.get('bird'),
 		update (dt, game) {
 			if (this.x >= game.stage.width) {
@@ -32,23 +34,26 @@ assets.load([
 			if (this.y < -this.image.height) {
 				this.y = game.stage.height
 			}
-			if(keyboard.isDown('right')) {
-				this.x += this.speed
-			}
-			if(keyboard.isDown('left')) {
-				this.x -= this.speed
-			}
-			if(keyboard.isDown('up')) {
-				this.y -= this.speed
-			}
-			if(keyboard.isDown('down')) {
-				this.y += this.speed
-			}
 		},
 		render (ctx) {
 			ctx.drawImage(this.image, this.x, this.y)
 		}
 	}
+
+	keyboard.on('down', key => {
+		if(keyboard.isDown('right')) {
+			bird.x += bird.speed
+		}
+		if(keyboard.isDown('left')) {
+			bird.x -= bird.speed
+		}
+		if(keyboard.isDown('up')) {
+			bird.y -= bird.speed
+		}
+		if(keyboard.isDown('down')) {
+			bird.y += bird.speed
+		}
+	})
 	
 	game.on('start', () => {
 		console.log('game start')

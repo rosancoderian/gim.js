@@ -1,9 +1,27 @@
-export default class Keyboard {
+import Emitter from "./emitter";
+
+export default class Keyboard extends Emitter {
     constructor (stage) {
+        super()
         this.map = this.mapKey()
-        this._pressed = {}
-        document.addEventListener('keydown', e => this._pressed[this.map[e.which]] = true)
-        document.addEventListener('keyup', e => this._pressed[this.map[e.which]] = false)
+        this._pressed = Object.values(this.map).reduce((_pressed, key) => {
+            _pressed[key] = false
+            return _pressed
+        }, {})
+        document.addEventListener('keydown', e => {
+            let key = this.map[e.which]
+            if (this._pressed[key] === false) {
+                this._pressed[key] = setInterval(() => {
+                    this.emit('down', key)
+                }, 1E3 / 60)
+            }
+        })
+        document.addEventListener('keyup', e => {
+            let key = this.map[e.which]
+            clearInterval(this._pressed[key])
+            this._pressed[key] = false
+            this.emit('up', key)
+        })
     }
 
     isDown (code) {
