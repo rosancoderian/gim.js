@@ -1,7 +1,7 @@
-import Ticker from './libs/ticker.js'
-import Stage from './libs/stage.js'
+import Game from './libs/game.js'
 import Assets from './libs/assets.js'
 import Keyboard from './libs/keyboard.js'
+import Mouse from './libs/mouse.js'
 
 let assets = new Assets()
 
@@ -10,27 +10,27 @@ assets.load([
 ]).then(() => {
 	console.log('all assets loaded')
 
-	let stage = new Stage(500, 500)
-	let ticker = new Ticker()
+	let game = new Game(500, 500)
 	let keyboard = new Keyboard()
+	let mouse = new Mouse()
 
 	let bird = {
 		x: 0,
 		y: 0,
 		speed: 10,
 		image: assets.get('bird'),
-		update (step) {
-			if (this.x >= stage.canvas.width) {
+		update (dt, game) {
+			if (this.x >= game.stage.width) {
 				this.x = -this.image.width
 			}
 			if (this.x < -this.image.width) {
-				this.x = stage.canvas.width
+				this.x = game.stage.width
 			}
-			if (this.y >= stage.canvas.height) {
+			if (this.y >= game.stage.height) {
 				this.y = -this.image.height
 			}
 			if (this.y < -this.image.height) {
-				this.y = stage.canvas.height
+				this.y = game.stage.height
 			}
 			if(keyboard.isDown('right')) {
 				this.x += this.speed
@@ -50,19 +50,17 @@ assets.load([
 		}
 	}
 	
-	stage.on('render', (stage) => {
+	game.on('start', () => {
+		console.log('game start')
+	})
+	
+	game.on('update', (dt, game) => {
+		bird.update(dt, game)
+	})
+
+	game.on('render', (stage) => {
 		bird.render(stage.ctx)
 	})
 	
-	ticker.on('start', () => {
-		console.log('ticker start')
-	})
-
-	ticker.on('update', () => {
-		bird.update()
-		stage.clear()
-		stage.render()
-	})
-	
-	ticker.start()
+	game.start()
 })
