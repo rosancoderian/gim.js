@@ -25,11 +25,11 @@ export default class Keyboard extends Emitter {
     }
 
     isDown (code) {
-        return this._pressed[code]
+        return this._pressed[code] && true
     }
 
     isUp (code) {
-        return !this._pressed[code]
+        return !this._pressed[code] && true
     }
 
     mapKey () {

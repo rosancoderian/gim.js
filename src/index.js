@@ -41,16 +41,16 @@ assets.load([
 	}
 
 	keyboard.on('down', key => {
-		if(keyboard.isDown('right')) {
+		if (key == 'right') {
 			bird.x += bird.speed
 		}
-		if(keyboard.isDown('left')) {
+		if (key == 'left') {
 			bird.x -= bird.speed
 		}
-		if(keyboard.isDown('up')) {
+		if (key == 'up') {
 			bird.y -= bird.speed
 		}
-		if(keyboard.isDown('down')) {
+		if (key == 'down') {
 			bird.y += bird.speed
 		}
 	})
