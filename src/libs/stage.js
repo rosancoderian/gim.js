@@ -17,8 +17,4 @@ export default class Stage extends Emitter {
         this.ctx.fillStyle = fill
         this.ctx.fillRect(x, y, width, height)
     }
-
-    render () {
-        this.emit('render', this)
-    }
 }
