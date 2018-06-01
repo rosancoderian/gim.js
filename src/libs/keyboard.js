@@ -1,8 +1,5 @@
-import Emitter from './emitter.js'
-
-export default class Keyboard extends Emitter {
+export default class Keyboard {
     constructor (stage) {
-        super()
         this.map = this.mapKey()
         this._pressed = {}
         document.addEventListener('keydown', e => this._pressed[this.map[e.which]] = true)
