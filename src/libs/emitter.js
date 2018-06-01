@@ -13,8 +13,8 @@ export default class Emitter {
         }
     }
 
-    emit(type, evt) {
-        (this.all[type] || []).slice().map(function (handler) { handler(evt); });
-        (this.all['*'] || []).slice().map(function (handler) { handler(type, evt); });
+    emit(type, ...args) {
+        (this.all[type] || []).slice().map(function (handler) { handler(...args); });
+        (this.all['*'] || []).slice().map(function (handler) { handler(type, ...args); });
     }
 }
