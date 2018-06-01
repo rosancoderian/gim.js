@@ -1,9 +1,9 @@
 import Emitter from './emitter.js'
 
 export default class Stage extends Emitter {
-    constructor (width, height) {
+    constructor (canvasId, width, height) {
         super()
-        this.canvas = document.createElement('canvas')
+        this.canvas = document.getElementById(canvasId)
         this.canvas.width = width
         this.canvas.height = height
         this.width = width

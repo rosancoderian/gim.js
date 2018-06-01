@@ -3,10 +3,10 @@ import Ticker from './ticker.js'
 import Stage from './stage.js'
 
 export default class Game extends Emitter {
-	constructor (w, h) {
+	constructor (canvasId, w, h) {
 		super()
 		this.ticker = new Ticker()
-		this.stage = new Stage(w, h)
+		this.stage = new Stage(canvasId, w, h)
 		this.ticker.on('update', dt => {
 			this.emit('update', dt, this)
 			this.stage.clear()
