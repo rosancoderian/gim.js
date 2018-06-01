@@ -7,10 +7,12 @@ let assets = new Assets()
 
 assets.load([
 	{ name: 'bird', url: 'https://raw.githubusercontent.com/sourabhv/FlapPyBird/master/assets/sprites/yellowbird-midflap.png' }
-]).then(() => {
+])
+
+assets.on('complete', () => {
 	console.log('all assets loaded')
 
-	let game = new Game(500, 500)
+	let game = new Game('canvas', 500, 500)
 	let keyboard = new Keyboard()
 	let mouse = new Mouse()
 

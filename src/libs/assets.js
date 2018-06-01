@@ -17,7 +17,9 @@ export default class Assets extends Emitter {
                 img.onerror = () => reject()
                 img.src = asset.url
             })
-        }))
+        })).then(() => {
+            this.emit('complete')
+        })
     }
 
     get (name) {
