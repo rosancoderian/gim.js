@@ -1,7 +1,6 @@
 import Game from './libs/game.js'
 import Assets from './libs/assets.js'
 import Keyboard from './libs/keyboard.js'
-import Mouse from './libs/mouse.js'
 
 let assets = new Assets()
 
@@ -14,7 +13,6 @@ assets.on('complete', () => {
 
 	let game = new Game('canvas', 500, 500)
 	let keyboard = new Keyboard()
-	let mouse = new Mouse()
 
 	let bird = {
 		x: 0,
