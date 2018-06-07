@@ -25,7 +25,7 @@
             super()
             this.assets = {}
         }
-    
+
         load (assets = []) {
             return Promise.all(assets.map((asset) => {
                 let img = new Image()
@@ -90,16 +90,17 @@
     }
 
     class Canvas extends Emitter {
-        constructor (canvasId, width, height) {
+        constructor (id, width, height) {
             super()
-            this.canvas = document.getElementById(canvasId)
-            this.canvas.width = width
-            this.canvas.height = height
+            this.id = id
             this.width = width
             this.height = height
-            this.ctx = this.canvas.getContext('2d')
+            this.el = document.getElementById(id)
+            this.el.width = width
+            this.el.height = height
+            this.el.setAttribute('tabindex', 1)
+            this.ctx = this.el.getContext('2d')
             this.ctx.imageSmoothingEnabled = false
-            document.body.appendChild(this.canvas)
         }
     
         clear (fill = '#000', x = 0, y = 0, width = this.width, height = this.height) {
@@ -109,26 +110,26 @@
     }
 
     class Keyboard extends Emitter {
-        constructor () {
+        constructor (canvas) {
             super()
-            this.map = this.mapKey()
+            this.map = this._mapKey()
             this._pressed = Object.values(this.map).reduce((_pressed, key) => {
                 _pressed[key] = false
                 return _pressed
             }, {})
-            document.addEventListener('keydown', e => {
+            canvas.el.addEventListener('keydown', e => {
                 let key = this.map[e.which]
                 if (this._pressed[key] === false) {
                     this._pressed[key] = setInterval(() => {
-                        this.emit('down', key)
+                        this.emit('down', key, e)
                     }, 1E3 / 60)
                 }
             })
-            document.addEventListener('keyup', e => {
+            canvas.el.addEventListener('keyup', e => {
                 let key = this.map[e.which]
                 clearInterval(this._pressed[key])
                 this._pressed[key] = false
-                this.emit('up', key)
+                this.emit('up', key, e)
             })
         }
     
@@ -140,7 +141,7 @@
             return !this._pressed[code] && true
         }
     
-        mapKey () {
+        _mapKey () {
             let map = {
                 8: 'backspace',
                 9: 'tab',
@@ -201,11 +202,21 @@
     }
 
     class Mouse extends Emitter {
-        constructor () {
+        constructor (canvas) {
             super()
-            document.addEventListener('mousemove', e => this.emit('move', e))
-            document.addEventListener('mousedown', e => this.emit('down', e))
-            document.addEventListener('mouseup', e => this.emit('up', e))
+            this.canvas = canvas
+            canvas.el.addEventListener('mousemove', e => this.emit('move', e.buttons, this._pos(e), e))
+            canvas.el.addEventListener('mousedown', e => this.emit('down', e.buttons, this._pos(e), e))
+            canvas.el.addEventListener('mouseup', e => this.emit('up', e.buttons, this._pos(e), e))
+        }
+
+        _pos (e) {
+            let offsetTop = this.canvas.el.offsetTop
+            let offsetLeft = this.canvas.el.offsetLeft
+            return {
+                x: e.clientX - offsetTop,
+                y: e.clientY - offsetLeft
+            }
         }
     }
 
@@ -213,11 +224,13 @@
         constructor (canvasId, w, h) {
             super()
             this.ticker = new Ticker()
-            this.stage = new Canvas(canvasId, w, h)
+            this.canvas = new Canvas(canvasId, w, h)
+            this.keyboard = new Keyboard(this.canvas)
+            this.mouse = new Mouse(this.canvas)
             this.ticker.on('update', dt => {
                 this.emit('update', dt, this)
-                this.stage.clear()
-                this.emit('render', this.stage)
+                this.canvas.clear()
+                this.emit('render', this.canvas)
             })
         }
     

@@ -13,11 +13,7 @@
     ])
 
     assets.on('complete', () => {
-        console.log('all assets loaded')
-
         let game = new gim.Game('canvas', 500, 500)
-        let keyboard = new gim.Keyboard()
-        let mouse = new gim.Mouse()
 
         let bird = {
             x: 0,
@@ -27,17 +23,17 @@
             velocityY: 0,
             image: assets.get('bird'),
             update(dt, game) {
-                if (this.x >= game.stage.width) {
+                if (this.x >= game.canvas.width) {
                     this.x = -this.image.width
                 }
                 if (this.x < -this.image.width) {
-                    this.x = game.stage.width
+                    this.x = game.canvas.width
                 }
-                if (this.y >= game.stage.height) {
+                if (this.y >= game.canvas.height) {
                     this.y = -this.image.height
                 }
                 if (this.y < -this.image.height) {
-                    this.y = game.stage.height
+                    this.y = game.canvas.height
                 }
             },
             render(ctx) {
@@ -45,7 +41,7 @@
             }
         }
 
-        keyboard.on('down', key => {
+        game.keyboard.on('down', (key, e) => {
             if (key == 'right') {
                 bird.x += bird.speed
             }
@@ -60,13 +56,9 @@
             }
         })
 
-        mouse.on('down', e => {
-            bird.x = e.clientX
-            bird.y = e.clientY
-        })
-
-        game.on('start', () => {
-            console.log('game start')
+        game.mouse.on('down', (button, pos, e) => {
+            bird.x = pos.x
+            bird.y = pos.y
         })
 
         game.on('update', (dt, game) => {
