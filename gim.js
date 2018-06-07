@@ -232,7 +232,7 @@
         }
     }
 
-    root.gim = {
+    let gim = {
         Emitter,
         Assets,
         Ticker,
@@ -240,5 +240,11 @@
         Keyboard,
         Mouse,
         Game,
+    }
+
+    if (!root) {
+        module.exports = gim
+    } else {
+        root.gim = gim
     }
 })(window)
