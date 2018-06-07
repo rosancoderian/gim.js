@@ -1,7 +1,7 @@
 import Emitter from "./emitter";
 
 export default class Keyboard extends Emitter {
-    constructor (stage) {
+    constructor () {
         super()
         this.map = this.mapKey()
         this._pressed = Object.values(this.map).reduce((_pressed, key) => {

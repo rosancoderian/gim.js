@@ -6,7 +6,7 @@ export default class Game extends Emitter {
 	constructor (canvasId, w, h) {
 		super()
 		this.ticker = new Ticker()
-		this.stage = new Stage(canvasId, w, h)
+		this.stage = new Canvas(canvasId, w, h)
 		this.ticker.on('update', dt => {
 			this.emit('update', dt, this)
 			this.stage.clear()
