@@ -1,6 +1,6 @@
 import Emitter from './emitter.js'
 
-export default class Stage extends Emitter {
+export default class Canvas extends Emitter {
     constructor (canvasId, width, height) {
         super()
         this.canvas = document.getElementById(canvasId)

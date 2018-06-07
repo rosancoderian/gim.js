@@ -1,6 +1,6 @@
 import Emitter from './emitter.js'
 import Ticker from './ticker.js'
-import Stage from './stage.js'
+import Canvas from './canvas.js'
 
 export default class Game extends Emitter {
 	constructor (canvasId, w, h) {
