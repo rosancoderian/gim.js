@@ -1,8 +1,2 @@
 # gim.js
-Simple html5 canvas game library
-
-
-```
-npm install
-npm run dev
-```
+Mini ES6 Html5 canvas game library for js13k
