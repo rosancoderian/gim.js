@@ -5,8 +5,11 @@ export default class Assets extends Emitter {
         super()
         this.assets = {}
     }
-    
-    load (assets = []) {
+
+    load (assets) {
+        if (!Array.isArray(assets)) {
+            assets = [assets]
+        }
         return Promise.all(
             assets.map(asset => {
                 let img = new Image()
@@ -20,7 +23,7 @@ export default class Assets extends Emitter {
                 })
             })
         ).then(() => {
-            this.emit("complete")
+            this.emit('complete')
         })
     }
     
